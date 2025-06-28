@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -23,6 +25,8 @@ public class Result {
         private String uid;
         private String name;
         private String avatar_url;
+        private List<String> images; // 新增图集字段
+        private String platform;     // 新增平台来源字段
     }
 
 }

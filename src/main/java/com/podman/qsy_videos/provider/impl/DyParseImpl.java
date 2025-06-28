@@ -110,17 +110,19 @@ public class DyParseImpl implements ParseVideo {
                 JSONObject authorObj = item.getJSONObject("author");
                 Result.DataObj.DataObjBuilder builder = Result.DataObj.builder()
                                 .video_title(item.getString("desc"))
-                                        .video_url(videoMp4Url)
-                                                .download_url(videoMp4Url)
-                        .image_url(item.getJSONObject("video")
+                                .video_url(videoMp4Url)
+                                .download_url(videoMp4Url)
+                                .image_url(item.getJSONObject("video")
                                 .getJSONObject("cover")
                                 .getJSONArray("url_list")
                                 .getString(0))
-                                                        .uid(authorObj.getString("sec_uid"))
-                        .name(authorObj.getString("nickname"))
+                                .uid(authorObj.getString("sec_uid"))
+                                .name(authorObj.getString("nickname"))
                                 .avatar_url(authorObj.getJSONObject("avatar_thumb")
                                         .getJSONArray("url_list")
-                                        .getString(0));
+                                        .getString(0))
+                                .platform("douyin")
+                                .images(images);
                 result.setData(builder.build());
                 result.setSuccess(Boolean.TRUE);
                 return result;

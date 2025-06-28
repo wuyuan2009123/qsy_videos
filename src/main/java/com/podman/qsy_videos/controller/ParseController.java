@@ -20,8 +20,12 @@ public class ParseController {
 
     @GetMapping("/parse")
     public Result parse(@RequestParam("url") String url) {
-        ParseVideo parseVideo = parseVideos.stream().filter(it -> it.support(url)).findFirst().orElseThrow();
-        return parseVideo.parse(url);
+        ParseVideo parseVideo = parseVideos.stream()
+                .filter(it -> it.support(url))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("不支持的解析链接"));
+        // 解析得到 Result
+        return  parseVideo.parse(url);
     }
 
 }
