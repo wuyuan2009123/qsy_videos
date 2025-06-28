@@ -45,7 +45,7 @@ public class XhsParseImpl implements ParseVideo {
 
     private static Result xhs(String url) {
         try {
-            if (url.contains("xhslink.com")) {
+            if (url.contains("xhslink.com")) {//暂时只支持 手机版本的
                 url = getRedirectUrl(url);
             }
             String response = sendGetRequest(url);
