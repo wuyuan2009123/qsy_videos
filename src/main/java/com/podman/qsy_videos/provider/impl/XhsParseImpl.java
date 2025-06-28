@@ -33,7 +33,7 @@ public class XhsParseImpl implements ParseVideo {
     @Override
     public boolean support(String url) {
         //http://xhslink.com/m/1EtjbUlstzt
-        return url.contains(".hongshu.com") || url.contains("xhs");
+        return url.contains(".xiaohongshu.com") || url.contains("xhs");
     }
 
     public static Result parseXhsVideo(String url) {
