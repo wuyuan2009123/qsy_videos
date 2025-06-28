@@ -37,8 +37,18 @@ public class KuaiShouParseImpl implements ParseVideo {
                 return buildErrorResult("无法提取视频 ID");
             }
 
+            // 构造请求 URL
+            String requestUrl;
+            if (newUrl.contains("/short-video/")) {
+                requestUrl = "https://www.kuaishou.com/short-video/" + id;
+            } else if (newUrl.contains("/photo/")) {
+                requestUrl = "https://www.kuaishou.com/short-video/" + id;
+            } else {
+                return buildErrorResult("不支持的链接格式");
+            }
+
             // 发起请求获取页面内容
-            String response = curl("https://www.kuaishou.com/short-video/" + id, List.of(
+            String response = curl(requestUrl, List.of(
                     "User-Agent: " + USER_AGENT
             ));
 
@@ -54,18 +64,17 @@ public class KuaiShouParseImpl implements ParseVideo {
                 return buildErrorResult("JSON 解析失败");
             }
 
-            String jsonData = matcher.group(1).trim();
+            String jsonDataStr = matcher.group(1).trim();
 
             // 清理非法函数表达式（PHP 中的 preg_replace 替代）
-            jsonData = jsonData.replaceAll("function\\s*$$[^)]*$$\\s*\\{[^}]*\\}", ":");
-            jsonData = jsonData.replaceAll(",\\s*(?=}|])", "");
-            jsonData = jsonData.replace(";(:());", "");
+            jsonDataStr = jsonDataStr.replaceAll("function\\s*$$[^)]*$$\\s*\\{[^}]*\\}", ":");
+            jsonDataStr = jsonDataStr.replaceAll(",\\s*(?=}|])", "");
+            jsonDataStr = jsonDataStr.replace(";(:());", "");
 
             JSONObject apolloState;
             try {
-                apolloState = JSON.parseObject(jsonData);
+                apolloState = JSON.parseObject(jsonDataStr);
             } catch (JSONException e) {
-                log.error("JSON错误：{}",e.getMessage());
                 return buildErrorResult("JSON 格式错误：" + e.getMessage());
             }
 
@@ -181,4 +190,5 @@ public class KuaiShouParseImpl implements ParseVideo {
                 .data(null)
                 .build();
     }
+
 }
