@@ -26,7 +26,10 @@ public class KuaiShouParser {
 
     public static Result parseShareUrl(String shareUrl) throws Exception {
         String locationUrl = fetchLocationUrl(shareUrl);
-        String redirectUrl = fetchRedirectUrl(locationUrl);
+        String redirectUrl = locationUrl;
+        if (!shareUrl.contains("v.kuaishou.com")) {
+            redirectUrl = fetchRedirectUrl(locationUrl);
+        }
         String htmlContent = fetchPageContent(redirectUrl);
         String jsonData = extractJsonData(htmlContent);
         JSONObject photoData = findPhotoData(jsonData);
