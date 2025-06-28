@@ -144,7 +144,7 @@ public class KuaiShouParser {
                         .video_title(data.getString("caption"))
                         .video_url(videoUrl)
                         .download_url(videoUrl)
-                        .image_url(data.getString("headUrl"))
+                        .image_url(data.getString("headUrl"))//header url
                         .uid(data.getString("userEid"))
                         .avatar_url(coverUrl)
                         .name(data.getString("userName"))
