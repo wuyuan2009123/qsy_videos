@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.podman.qsy_videos.common.Result;
 import com.podman.qsy_videos.provider.ParseVideo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@Slf4j
 public class DyParseImpl implements ParseVideo {
 
     private static final HttpClient httpClient = HttpClient.newHttpClient();
@@ -127,7 +129,11 @@ public class DyParseImpl implements ParseVideo {
                 result.setSuccess(Boolean.TRUE);
                 return result;
             } catch (Exception e) {
-                throw new RuntimeException("解析失败: " + e.getMessage(), e);
+                log.error("抖音解析失败，e：{}",e.getMessage());
+                return Result.builder()
+                        .success(false)
+                        .data(null)
+                        .build();
             }
     }
 
