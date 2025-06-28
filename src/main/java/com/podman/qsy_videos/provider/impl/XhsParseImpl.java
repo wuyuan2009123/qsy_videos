@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -41,24 +40,15 @@ public class XhsParseImpl implements ParseVideo {
         if (url == null || url.isEmpty()) {
             throw new IllegalArgumentException("URl 参数不能为空！");
         }
-        try {
-            // 处理xhs.com域名的情况
-            URI uri = new URI(url);
-            if ("xhs.com".equals(uri.getHost())) {
-                String[] parts = url.split("/");
-                url = "http://xhslink.com/a/" + parts[4];
-            }
-            return xhs(url);
-        } catch (URISyntaxException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException("URL格式错误！");
-        }
+        return xhs(url);
     }
 
     private static Result xhs(String url) {
         try {
-            String real_url = getRedirectUrl(url);
-            String response = sendGetRequest(real_url);
+            if (url.contains("xhslink.com")) {
+                url = getRedirectUrl(url);
+            }
+            String response = sendGetRequest(url);
             // 使用正则表达式提取JSON数据
             Pattern pattern = Pattern.compile("<script>\\s*window.__INITIAL_STATE__\\s*=\\s*(\\{[\\s\\S]*?})</script>");
             assert response != null;
