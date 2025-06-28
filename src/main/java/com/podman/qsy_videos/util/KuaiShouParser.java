@@ -132,6 +132,12 @@ public class KuaiShouParser {
                 }
             }
         }
+        JSONArray coverUrls = data.getJSONArray("coverUrls");
+        String coverUrl = "";
+        if (coverUrls!=null && !coverUrls.isEmpty()) {
+            JSONObject coverUrlObj = coverUrls.getJSONObject(0);
+            coverUrl = coverUrlObj.getString("url");
+        }
 
         Result result = new Result();
         result.setData(Result.DataObj.builder()
@@ -140,7 +146,7 @@ public class KuaiShouParser {
                         .download_url(videoUrl)
                         .image_url(data.getString("headUrl"))
                         .uid(data.getString("userEid"))
-                        .avatar_url(data.getString("headUrl"))
+                        .avatar_url(coverUrl)
                         .name(data.getString("userName"))
                         .images(images)
                         .platform("kuaishou")
