@@ -1,7 +1,7 @@
 # qsy_videos
 全平台短视频去水印api  
 
-# 初衷 其他语音都有开源的 还不止一个 看 java没有就写了
+# 初衷 其他语言都有开源的 还不止一个 看 java没有就写了
 
 python : https://github.com/wujunwei928/parse-video-py
 php    : https://github.com/jiuhunwl/short_videos
