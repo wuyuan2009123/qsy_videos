@@ -42,11 +42,11 @@ public class DyParseImpl implements ParseVideo {
     public Result dy(String shareUrl) {
             String videoId = "";
             try {
-                if (shareUrl.startsWith("https://www.douyin.com/video/")) {
+                if (shareUrl.startsWith("https://www.douyin.com/video/")) {//电脑版本
                     videoId = shareUrl.strip().split("/")[4].split("\\?")[0];
                 } else {
                     // 处理短链接跳转
-                    videoId = extractId(shareUrl);;
+                    videoId = extractId(shareUrl);//手机版本
                 }
                 String reqUrl = "https://www.iesdouyin.com/share/video/" + videoId + "/";
                 HttpResponse<String> htmlRes = sendGetRequest(reqUrl);

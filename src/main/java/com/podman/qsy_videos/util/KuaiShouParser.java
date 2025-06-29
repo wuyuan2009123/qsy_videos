@@ -28,7 +28,7 @@ public class KuaiShouParser {
         String locationUrl = fetchLocationUrl(shareUrl);
         String redirectUrl = locationUrl;
         if (!shareUrl.contains("v.kuaishou.com")) {
-            redirectUrl = fetchRedirectUrl(locationUrl);
+            redirectUrl = fetchRedirectUrl(locationUrl);//电脑版本多处理一个步骤
         }
         String htmlContent = fetchPageContent(redirectUrl);
         String jsonData = extractJsonData(htmlContent);
